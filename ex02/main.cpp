@@ -1,109 +1,69 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "Base.hpp"
 #include "A.hpp"
 #include "B.hpp"
 #include "C.hpp"
 
-#include <cstdlib>
-#include <cstdio>
-#include <ctime>
+Base* generate();
+void identify(Base* p);
+void identify(Base& p);
 
-/**
- * @brief  creates radomly one of the three classes A, B or C
- * @note   the class is allocated
- * @retval returns NULL if something goes wrong
- */
-static Base *generate(void)
-{
-	switch (rand() % 3)
-	{
-	case 0:
-		return (new A());
-		break;
-	case 1:
-		return (new B());
-		break;
-	case 2:
-		return (new C());
-		break;
-	default:
-		perror("random generator : ERROR");
-		return (NULL);
-	}
+Base* generate() {
+    int r = std::rand() % 3;
+    if (r == 0) {
+        std::cout << "Genere: A" << std::endl;
+        return new A();
+    } else if (r == 1) {
+        std::cout << "Genere: B" << std::endl;
+        return new B();
+    } else {
+        std::cout << "Genere: C" << std::endl;
+        return new C();
+    }
 }
 
-/**
- * @brief  is able to identify the 3 different classes A, B and C
- * @note   will write the found type of the *Test into cout
- * @param  *Test: pointer to the class to identify
- * @retval None
- */
-static void identify(Base *Test)
-{
-	if (dynamic_cast<A *>(Test))
-		std::cout << "A is the identified type" << std::endl;
-	else if (dynamic_cast<B *>(Test))
-		std::cout << "B is the identified type" << std::endl;
-	else if (dynamic_cast<C *>(Test))
-		std::cout << "C is the identified type" << std::endl;
-	else
-		std::cout << "unknown type" << std::endl;
+void identify(Base* p) {
+    if (dynamic_cast<A*>(p))
+        std::cout << "A" << std::endl;
+    else if (dynamic_cast<B*>(p))
+        std::cout << "B" << std::endl;
+    else if (dynamic_cast<C*>(p))
+        std::cout << "C" << std::endl;
+    else
+        std::cout << "Inconnu" << std::endl;
 }
 
-static int i = 0;
-static std::string classes[] = {"A", "B", "C"};
-
-/**
- * @brief  recursive function to find the correct type of the passed &Test
- * @note   will write the found type of the *Test into cout
- * @param  &Test: reference to the class to identify
- * @retval None
- */
-static void identify(Base &Test)
-{
-	while (i < 3)
-	{
-		void *foo = NULL;
-		Base &unused = (Base &)foo;
-		try
-		{
-			if (i == 0)
-				unused = dynamic_cast<A &>(Test);
-			else if (i == 1)
-				unused = dynamic_cast<B &>(Test);
-			else if (i == 2)
-				unused = dynamic_cast<C &>(Test);
-			else
-				std::cout << "unknow type" << std::endl;
-			(void)unused;
-		}
-		catch (std::exception &e)
-		{
-			i++;
-			identify(Test);
-			return;
-		}
-		std::cout << classes[i] << " --> identified type" << std::endl;
-		i = 0;
-		break;
-	}
+void identify(Base& p) {
+    if (dynamic_cast<A*>(&p))
+        std::cout << "A" << std::endl;
+    else if (dynamic_cast<B*>(&p))
+        std::cout << "B" << std::endl;
+    else if (dynamic_cast<C*>(&p))
+        std::cout << "C" << std::endl;
+    else
+        std::cout << "Inconnu" << std::endl;
 }
 
-int main()
-{
-	srand(time(NULL));
-	for (int j = 0; j < 5; j++)
-	{
-		Base *Test = generate();
-		if (Test == NULL)
-			return (1);
-		else
-		{
-			identify(Test);
-			identify(*Test);
-			delete (Test);
+int main() {
+    std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation aléatoire
 
-			std::cout << std::endl;
-		}
-	}
-	return (0);
+    std::cout << "=== TEST DE TYPE PAR IDENTIFICATION ===" << std::endl;
+
+    for (int i = 0; i < 5; ++i) {
+        std::cout << "\n[TEST " << i + 1 << "]" << std::endl;
+
+        Base* ptr = generate();// genere un objet A, B ou C
+
+        std::cout << "Identification par pointeur : ";
+        identify(ptr); // affiche A, B ou C avec Base*
+
+        std::cout << "Identification par reference : ";
+        identify(*ptr); // affiche A, B ou C avec Base&
+
+        delete ptr;
+    }
+
+    return 0;
 }
