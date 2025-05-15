@@ -10,30 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Conversion.hpp"
+#include "ScalarConverter.hpp"
 
-int main(int ac, char **av)
-{
-	if (ac != 2)
-	{
-		std::cerr << "require 1 argument" << std::endl;
-		return (1);
-	}
-	try
-	{
-		Conversion conversion(av[1]);
-		// try
-		// {
-		// 	Conversion copy(conversion);
-		// }
-		// catch(const std::exception& e)
-		// {
-		// 	std::cerr << e.what() << std::endl;
-		// }
-	}
-	catch(const Conversion::ErrorException& e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-	return (0);
+int main(int ac, char **av) {
+    if (ac != 2) {
+        std::cerr << "Usage: ./convert <literal>" << std::endl;
+        return 1;
+    }
+
+    ScalarConverter::convert(av[1]);
+    return 0;
 }
+

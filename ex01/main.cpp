@@ -1,45 +1,28 @@
 #include "Serializer.hpp"
 
-int main()
-{
-	Data ptr2;
-	ptr2.name = "Michaela Mustermann";
-	ptr2.age = 42;
-	ptr2.next = NULL;
+int main() {
+	Data data;
 
-	Data ptr;
-	ptr.name = "Max Mustermann";
-	ptr.age = 42;
-	ptr.next = &ptr2;
+	data.name = "Alice";
+	data.age = 30;
+	data.next = nullptr;
 
+	std::cout << "Data pointer: " << &data << std::endl;
+	std::cout << "Data name: " << data.name << std::endl;
+	std::cout << "Data age: " << data.age << std::endl;
 
-	std::cout << "Here is the original structs:" <<
-				"\n\taddress: " << &ptr <<
-				"\n\tname: " << ptr.name <<
-				"\n\tage: " << ptr.age <<
-				"\n\taddress next: " << ptr.next <<
-	std::endl;
-	std::cout << "\taddress ptr2: " << &ptr2 <<
-				"\n\tname: " << ptr2.name <<
-				"\n\tage: " << ptr2.age <<
-				"\n\taddress next: " << ptr2.next <<
-	std::endl << std::endl;
+	uintptr_t raw = Serializer::serialize(&data);
+	std::cout << "Serialized uintptr_t: " << raw << std::endl;
 
-	Serializer a;
+	Data* recovered = Serializer::unserialize(raw);
+	std::cout << "Recovered pointer: " << recovered << std::endl;
+	std::cout << "Recovered name: " << recovered->name << std::endl;
+	std::cout << "Recovered age: " << recovered->age << std::endl;
 
-	Data *reserialized_struct = a.unserialize(a.serialize(&ptr));
+	if (recovered == &data)
+		std::cout << "✅ Success: The recovered pointer is the same as the data!" << std::endl;
+	else
+		std::cout << "❌ Error: The recovered pointer is different from the data." << std::endl;
 
-	std::cout << "Here is the reserialized structs:" <<
-				"\n\taddress: " << reserialized_struct <<
-				"\n\tname: " << reserialized_struct->name <<
-				"\n\tage: " << reserialized_struct->age <<
-				"\n\taddress next: " << reserialized_struct->next <<
-	std::endl;
-	std::cout << "\taddress ptr2: " << &ptr2 <<
-				"\n\tname: " << ptr2.name <<
-				"\n\tage: " << ptr2.age <<
-				"\n\taddress next: " << ptr2.next <<
-	std::endl << std::endl;
-
-	return (0);
+	return 0;
 }
