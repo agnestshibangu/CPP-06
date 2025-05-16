@@ -1,11 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 16:33:49 by agtshiba          #+#    #+#             */
+/*   Updated: 2025/05/16 16:15:39 by agtshiba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScalarConverter.hpp"
 
 void ScalarConverter::convert(const std::string& literal) {
     double value = 0.0;
     std::string input = literal;
 
-    // Vérifier si c’est un littéral de type char, ex : 'a'
-    if (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'') {
+    if (literal.length() == 1) {
+        char c = literal[0];
+        value = static_cast<double>(c);
+    }
+	else if (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'') {
         char c = literal[1];
         value = static_cast<double>(c);
     }
@@ -29,7 +44,7 @@ void ScalarConverter::convert(const std::string& literal) {
     }
     else {
         // Vérifie si la fin est un 'f' → float
-        if (literal.back() == 'f' && literal.find('.') != std::string::npos) {
+		if (!literal.empty() && literal[literal.size() - 1] == 'f' && literal.find('.') != std::string::npos) {
             input = literal.substr(0, literal.length() - 1);  // enlever le 'f'
         }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 16:36:19 by agtshiba          #+#    #+#             */
+/*   Updated: 2025/05/15 16:36:21 by agtshiba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -47,7 +59,7 @@ void identify(Base& p) {
 }
 
 int main() {
-    std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation aléatoire
+    std::srand(static_cast<unsigned int>(std::time(NULL))); // Initialisation aléatoire
 
     std::cout << "=== TEST DE TYPE PAR IDENTIFICATION ===" << std::endl;
 

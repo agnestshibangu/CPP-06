@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 16:37:18 by tblaase           #+#    #+#             */
-/*   Updated: 2022/04/13 10:29:55 by tblaase          ###   ########.fr       */
+/*   Created: 2025/05/15 16:33:38 by agtshiba          #+#    #+#             */
+/*   Updated: 2025/05/16 16:16:12 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int main(int ac, char **av) {
         std::cerr << "Usage: ./convert <literal>" << std::endl;
         return 1;
     }
-
     ScalarConverter::convert(av[1]);
     return 0;
 }
